@@ -17,6 +17,10 @@ type Getter interface {
 
 type GetterFunc func(key string) ([]byte, error)
 
+func (f GetterFunc) Get(key string) ([]byte, error) {
+	return f(key)
+}
+
 var (
 	mu     sync.RWMutex
 	groups = make(map[string]*Group)

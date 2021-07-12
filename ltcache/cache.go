@@ -1,13 +1,13 @@
 package ltcache
 
 import (
-	"github.com/ltinyho/ltcache/lru"
+	lru2 "github.com/ltinyho/ltcache/ltcache/lru"
 	"sync"
 )
 
 type cache struct {
 	mu         sync.Mutex
-	lru        *lru.Cache
+	lru        *lru2.Cache
 	cacheBytes int64
 }
 
@@ -15,7 +15,7 @@ func (c *cache) add(key string, value ByteView) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	if c.lru == nil {
-		c.lru = lru.New(c.cacheBytes, nil)
+		c.lru = lru2.New(c.cacheBytes, nil)
 	}
 	c.lru.Add(key, value)
 }
